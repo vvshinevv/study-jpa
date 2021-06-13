@@ -29,6 +29,4 @@ public class Team {
         this.id = id;
         this.name = name;
     }
-
-
 }
