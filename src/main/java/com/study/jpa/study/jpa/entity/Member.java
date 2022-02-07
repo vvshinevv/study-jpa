@@ -1,45 +1,31 @@
 package com.study.jpa.study.jpa.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.SequenceGenerator;
 
-@Getter @Setter
-@Table(name = "MEMBER")
 @Entity
+@SequenceGenerator(
+        name = "member_seq_generator", // SequenceGenerator 이름
+        sequenceName = "member_seq",
+        initialValue = 1, allocationSize = 50
+)
 public class Member {
-
     @Id
-    @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "member_seq_generator"
+    )
     private Long id;
 
-    @Column(name = "NAME")
-    private String name;
-
-    private String city;
-
-    private String street;
-
-    private String zipcode;
-
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    private String username;
 
     public Member() {
-
     }
 
-    public Member(String name) {
-        this.name = name;
+    public Member(String username) {
+        this.username = username;
     }
 }

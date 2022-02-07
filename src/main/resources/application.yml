@@ -2,17 +2,19 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:h2:mem:study
+    url: jdbc:h2:tcp://localhost/~/study
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
+    show-sql: false
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
-        use_sql_comments: true
+        use_sql_comments: false
 logging.level:
   org.hibernate.SQL: debug
 
