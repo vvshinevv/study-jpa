@@ -1,30 +1,28 @@
 package com.study.jpa.study.jpa.application;
 
-import com.study.jpa.study.jpa.entity.Member;
+import com.study.jpa.study.jpa.entity.User;
+import com.study.jpa.study.jpa.repository.MemberRepository;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class PlayJPA {
+    private final MemberRepository memberRepository;
 
-    private final EntityManager em;
-
-    public PlayJPA(EntityManager em) {
-        this.em = em;
+    public PlayJPA(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Transactional
     public void doApplication() {
-        Member member1 = new Member("A");
-        Member member2 = new Member("B");
-        Member member3 = new Member("C");
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            users.add(new User("member" + i));
+        }
 
-        System.out.println("========");
-        em.persist(member1);
-        em.persist(member2);
-        em.persist(member3);
-        System.out.println("========");
+        memberRepository.saveAll(users);
     }
 }

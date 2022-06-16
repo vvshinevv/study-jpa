@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 @SpringBootTest
+@Transactional
+@Rollback(value = false)
 class StudyJpaApplicationTests {
 
     @Autowired
@@ -19,9 +21,13 @@ class StudyJpaApplicationTests {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = false)
     public void testGetAndSave() {
         System.out.println("false");
     }
+
+    @Test
+    public void multiThreadJPADML() {
+        System.out.println("false");
+    }
+
 }
