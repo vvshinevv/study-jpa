@@ -1,20 +1,19 @@
 package com.study.jpa.study.jpa.infra;
 
-import com.querydsl.jpa.impl.JPAQuery;
 import com.study.jpa.study.jpa.entity.User;
-import com.study.jpa.study.jpa.entity.UserRepositoryCustom;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static com.study.jpa.study.jpa.entity.QUser.user;
-
 @Slf4j
-public class UserRepositoryImpl implements UserRepositoryCustom {
+@Repository
+public class UserRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -23,12 +22,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         if (start == 0) {
             throw new RuntimeException();
         }
-        log.info("what is entityManager :: {}", entityManager);
-        return CompletableFuture.supplyAsync(() -> new JPAQuery<>(entityManager)
-                .select(user)
-                .from(user)
-                .where(user.id.goe(start).and(user.id.loe(end)))
-                .fetch()
-        );
+        log.info("what is entityManager :: {}", entityManager.hashCode());
+        return CompletableFuture.supplyAsync(() -> Collections.singletonList(entityManager.find(User.class, start)));
+    }
+
+    public void saveUser(User user) {
+        entityManager.persist(user);
     }
 }
