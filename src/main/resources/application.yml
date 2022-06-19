@@ -2,7 +2,7 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:mysql://localhost:3306/study?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/study?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,4 +21,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
 logging.level:
   org.hibernate.SQL: debug
-
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
