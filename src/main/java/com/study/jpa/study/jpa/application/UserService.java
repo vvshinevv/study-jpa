@@ -1,7 +1,7 @@
 package com.study.jpa.study.jpa.application;
 
-import com.study.jpa.study.jpa.entity.User;
-import com.study.jpa.study.jpa.infra.UserRepository;
+import com.study.jpa.study.jpa.domain.User;
+import com.study.jpa.study.jpa.domain.UserRepository;
 import com.study.jpa.study.jpa.model.UsersResponse;
 import org.springframework.stereotype.Service;
 

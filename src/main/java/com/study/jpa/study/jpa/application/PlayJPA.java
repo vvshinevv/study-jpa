@@ -1,10 +1,13 @@
 package com.study.jpa.study.jpa.application;
 
-import com.study.jpa.study.jpa.entity.User;
-import com.study.jpa.study.jpa.infra.UserRepository;
+import com.study.jpa.study.jpa.domain.User;
+import com.study.jpa.study.jpa.domain.UserRepository;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class PlayJPA {
@@ -18,8 +21,11 @@ public class PlayJPA {
 
     @Transactional
     public void doApplication() {
+        List<User> users = new ArrayList<>();
         for (int i = 0; i < NUMBER; i++) {
-            userRepository.saveUser(new User("member" + i));
+            users.add(new User("member" + i));
         }
+        int[][] result = userRepository.saveBulkSplitInsert(users);
+        System.out.println(Arrays.toString(result));
     }
 }
