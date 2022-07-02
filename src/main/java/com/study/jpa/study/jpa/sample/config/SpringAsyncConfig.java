@@ -1,4 +1,4 @@
-package com.study.jpa.study.jpa.config;
+package com.study.jpa.study.jpa.sample.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

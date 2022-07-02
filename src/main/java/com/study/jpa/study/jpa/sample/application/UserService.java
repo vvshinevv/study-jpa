@@ -1,8 +1,8 @@
-package com.study.jpa.study.jpa.application;
+package com.study.jpa.study.jpa.sample.application;
 
-import com.study.jpa.study.jpa.domain.User;
-import com.study.jpa.study.jpa.domain.UserRepository;
-import com.study.jpa.study.jpa.model.UsersResponse;
+import com.study.jpa.study.jpa.sample.domain.User;
+import com.study.jpa.study.jpa.sample.domain.UserRepository;
+import com.study.jpa.study.jpa.sample.model.UsersResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

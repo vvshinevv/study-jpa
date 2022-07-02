@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.jpa.study.jpa.lock.mapper.PointMapper">
+    <select id="findPointByIdForUpdate" resultType="com.study.jpa.study.jpa.lock.domain.Point"
+            parameterType="java.lang.Long">
+        SELECT point_id,
+               member_id,
+               amount
+        FROM point
+        WHERE member_id = #{member_id};
+    </select>
+    <select id="findPointById" resultType="com.study.jpa.study.jpa.lock.domain.Point" parameterType="java.lang.Long">
+        SELECT point_id,
+               member_id,
+               amount
+        FROM point
+        WHERE member_id = #{member_id};
+    </select>
+    <insert id="persistPoint" parameterType="com.study.jpa.study.jpa.lock.domain.Point">
+        INSERT INTO point (member_id, amount)
+        VALUES (#{memberId}, #{amount});
+    </insert>
+    <update id="updatePoint" parameterType="com.study.jpa.study.jpa.lock.domain.Point">
+        UPDATE point
+        SET member_id = #{memerId},
+            amount    = #{amount}
+        WHERE point_id = #{pointId}
+    </update>
+</mapper>

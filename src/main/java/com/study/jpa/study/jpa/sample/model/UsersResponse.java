@@ -1,4 +1,4 @@
-package com.study.jpa.study.jpa.model;
+package com.study.jpa.study.jpa.sample.model;
 
 import lombok.Getter;
 
