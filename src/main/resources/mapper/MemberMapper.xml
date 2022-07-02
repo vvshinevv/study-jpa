@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.jpa.study.jpa.lock.mapper.MemberMapper">
+    <resultMap id="memberResultMap" type="com.study.jpa.study.jpa.lock.domain.Member">
+        <result column="member_id" property="id"/>
+        <result column="member_name" property="memberName"/>
+    </resultMap>
+    <select id="findAll" resultMap="memberResultMap">
+        SELECT member_id, member_name
+        FROM member;
+    </select>
+    <select id="findMemberById" parameterType="java.lang.Long" resultMap="memberResultMap">
+        SELECT member_id, member_name
+        FROM member
+        WHERE member_id = #{memberId};
+    </select>
+</mapper>

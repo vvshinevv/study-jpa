@@ -1,11 +1,10 @@
-package com.study.jpa.study.jpa.infra;
+package com.study.jpa.study.jpa.sample.infra;
 
-import com.study.jpa.study.jpa.domain.User;
-import com.study.jpa.study.jpa.domain.UserRepositoryCustom;
+import com.study.jpa.study.jpa.sample.domain.User;
+import com.study.jpa.study.jpa.sample.domain.UserRepositoryCustom;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 

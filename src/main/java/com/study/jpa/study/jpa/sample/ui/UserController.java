@@ -1,7 +1,7 @@
-package com.study.jpa.study.jpa.ui;
+package com.study.jpa.study.jpa.sample.ui;
 
-import com.study.jpa.study.jpa.application.UserService;
-import com.study.jpa.study.jpa.model.UsersResponse;
+import com.study.jpa.study.jpa.sample.application.UserService;
+import com.study.jpa.study.jpa.sample.model.UsersResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,22 +1,11 @@
 package com.study.jpa.study.jpa;
 
-import com.study.jpa.study.jpa.application.PlayJPA;
-import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 @SpringBootApplication
-public class StudyJpaApplication implements ApplicationContextAware {
-
+public class StudyJpaApplication {
     public static void main(String[] args) {
         SpringApplication.run(StudyJpaApplication.class, args);
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        PlayJPA playJPA = applicationContext.getBean("playJPA", PlayJPA.class);
-        playJPA.doApplication();
     }
 }
