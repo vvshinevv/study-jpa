@@ -4,9 +4,7 @@ import com.study.jpa.study.jpa.lock.application.NumberEntryService;
 import com.study.jpa.study.jpa.lock.domain.Member;
 import com.study.jpa.study.jpa.lock.domain.NumberEntry;
 import com.study.jpa.study.jpa.lock.domain.NumberEntryRepository;
-import org.assertj.core.internal.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 import org.junit.Ignore;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,7 @@ public class SimpleTest {
     private NumberEntryRepository numberEntryRepository;
 
     private NumberEntry persistEntry;
+
     @BeforeEach
     void setup() {
 
@@ -81,21 +80,51 @@ public class SimpleTest {
     }
 
     @Test
-    void LOCK_TEST_PARENT() throws InterruptedException {
-        for (int i = 0 ; i < 10; i++) {
-            LOCK_TEST_1();
-        }
-    }
-
-    void LOCK_TEST_1() throws InterruptedException {
+    void LOCK_TEST_WITH_NORMAL() throws InterruptedException {
         NumberEntry numberEntry = new NumberEntry();
         persistEntry = numberEntryRepository.save(numberEntry);
 
-        CountDownLatch latch = new CountDownLatch(10);
-        ExecutorService es = Executors.newFixedThreadPool(10);
-        for (int i = 0 ; i < 10; i++) {
+        CountDownLatch latch = new CountDownLatch(2);
+        ExecutorService es = Executors.newFixedThreadPool(2);
+        for (int i = 0; i < 1; i++) {
             es.execute(() -> {
                 numberEntryService.normalIncrement(persistEntry.getId());
+                latch.countDown();
+            });
+        }
+
+        latch.await();
+        System.out.println(numberEntryRepository.findById(persistEntry.getId()).orElse(new NumberEntry()).getCount());
+    }
+
+    @Test
+    void LOCK_TEST_PESSIMISTIC_WRITE_TEST() throws InterruptedException {
+        NumberEntry numberEntry = new NumberEntry();
+        persistEntry = numberEntryRepository.save(numberEntry);
+
+        CountDownLatch latch = new CountDownLatch(2);
+        ExecutorService es = Executors.newFixedThreadPool(2);
+        for (int i = 0; i < 1; i++) {
+            es.execute(() -> {
+                numberEntryService.lockIncrement(persistEntry.getId());
+                latch.countDown();
+            });
+        }
+
+        latch.await();
+        System.out.println(numberEntryRepository.findById(persistEntry.getId()).orElse(new NumberEntry()).getCount());
+    }
+
+    @Test
+    void LOCK_TEST_SERIALIZABLE_ISOLATION_LEVEL_TEST() throws InterruptedException {
+        NumberEntry numberEntry = new NumberEntry();
+        persistEntry = numberEntryRepository.save(numberEntry);
+
+        CountDownLatch latch = new CountDownLatch(2);
+        ExecutorService es = Executors.newFixedThreadPool(2);
+        for (int i = 0; i < 1; i++) {
+            es.execute(() -> {
+                numberEntryService.isolationIncrement(persistEntry.getId());
                 latch.countDown();
             });
         }
