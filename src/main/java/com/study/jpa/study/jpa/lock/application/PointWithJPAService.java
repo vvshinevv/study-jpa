@@ -28,4 +28,15 @@ public class PointWithJPAService {
         point.depositPoint(amount);
         Point persistPoint = pointRepository.save(point);
     }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void withdrawPoint(Long memberId, int amount) {
+        Member member = memberRepository.findById(memberId).orElseThrow();
+
+        Point point = pointRepository.findPointForUpdate(memberId)
+                .orElse(new Point(member.getId(), 0));
+
+        point.withdrawPoint(amount);
+        Point persistPoint = pointRepository.save(point);
+    }
 }

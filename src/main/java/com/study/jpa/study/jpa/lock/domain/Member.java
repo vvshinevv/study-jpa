@@ -26,6 +26,15 @@ public class Member {
     protected Member() {
     }
 
+    public Member(String memberName) {
+        this.memberName = memberName;
+    }
 
-
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", memberName='" + memberName + '\'' +
+                '}';
+    }
 }
