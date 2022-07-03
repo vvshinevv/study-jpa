@@ -14,9 +14,27 @@ public class NumberEntryService {
         this.numberEntryRepository = numberEntryRepository;
     }
 
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Transactional
     public void normalIncrement(Long id) {
+        NumberEntry numberEntry = numberEntryRepository.findById(id).orElseThrow(() -> {
+            throw new RuntimeException();
+        });
+        numberEntry.increment();
+        System.out.println(Thread.currentThread().getName() + ": " + numberEntry.getCount());
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void isolationIncrement(Long id) {
         NumberEntry numberEntry = numberEntryRepository.findByNumberIdIsolation(id).orElseThrow(() -> {
+            throw new RuntimeException();
+        });
+        numberEntry.increment();
+        System.out.println(Thread.currentThread().getName() + ": " + numberEntry.getCount());
+    }
+
+    @Transactional
+    public void lockIncrement(Long id) {
+        NumberEntry numberEntry = numberEntryRepository.findByNumberIdLock(id).orElseThrow(() -> {
             throw new RuntimeException();
         });
         numberEntry.increment();
