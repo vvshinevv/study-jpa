@@ -14,7 +14,6 @@ public class NumberEntryService {
         this.numberEntryRepository = numberEntryRepository;
     }
 
-
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void normalIncrement(Long id) {
         NumberEntry numberEntry = numberEntryRepository.findByNumberIdIsolation(id).orElseThrow(() -> {
