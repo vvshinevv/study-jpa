@@ -37,6 +37,7 @@ public class NumberEntryService {
         NumberEntry numberEntry = numberEntryRepository.findByNumberIdLock(id).orElseThrow(() -> {
             throw new RuntimeException();
         });
+
         numberEntry.increment();
         System.out.println(Thread.currentThread().getName() + ": " + numberEntry.getCount());
     }
