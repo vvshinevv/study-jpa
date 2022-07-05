@@ -22,6 +22,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
+import static java.lang.Thread.sleep;
+
 @Sql(scripts = {"classpath:sql/schema-mysql.sql", "classpath:sql/data-mysql.sql"})
 @SpringBootTest
 public class SimpleTest {
@@ -86,7 +88,7 @@ public class SimpleTest {
 
         CountDownLatch latch = new CountDownLatch(2);
         ExecutorService es = Executors.newFixedThreadPool(2);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             es.execute(() -> {
                 numberEntryService.normalIncrement(persistEntry.getId());
                 latch.countDown();
@@ -104,8 +106,19 @@ public class SimpleTest {
 
         CountDownLatch latch = new CountDownLatch(2);
         ExecutorService es = Executors.newFixedThreadPool(2);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
+            int finalI = i;
             es.execute(() -> {
+                if (finalI == 0) {
+                    try {
+                        sleep(4000);
+
+                    } catch (InterruptedException e) {
+
+                        throw new RuntimeException(e);
+                    }
+                }
+                System.out.println(">>>>>>>>> " + Thread.currentThread().getName());
                 numberEntryService.lockIncrement(persistEntry.getId());
                 latch.countDown();
             });
@@ -122,7 +135,7 @@ public class SimpleTest {
 
         CountDownLatch latch = new CountDownLatch(2);
         ExecutorService es = Executors.newFixedThreadPool(2);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             es.execute(() -> {
                 numberEntryService.isolationIncrement(persistEntry.getId());
                 latch.countDown();
