@@ -33,7 +33,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         if (start == 0) {
             throw new RuntimeException();
         }
-        log.info("what is entityManager :: {}", entityManager.hashCode());
+        log.info("graceful terminal test :: {}", Thread.currentThread().getName());
         return CompletableFuture.supplyAsync(() -> Collections.singletonList(entityManager.find(User.class, start)));
     }
 
